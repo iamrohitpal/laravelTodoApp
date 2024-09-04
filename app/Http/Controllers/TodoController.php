@@ -12,8 +12,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $data = Todo::get();
-        return view('welcome', compact('data'));
+        $todos = Todo::get();
+        return view('index', compact('todos'));
     }
 
     /**
@@ -21,7 +21,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -29,27 +29,35 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Todo::create([
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+        ]);
+
+        $todo = Todo::create([
             'title' => $request->title,
             'description' => $request->description
         ]);
-        return $data;
+
+        return to_route('index')->with('success', 'Todo add successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Todo $todo)
+    public function show(Request $request)
     {
-        //
+        $todo = Todo::where('id', $request->id)->first();
+        return view('details', compact('todo'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Todo $todo)
+    public function edit(Request $request)
     {
-        //
+        $todo = Todo::where('id', $request->id)->first();
+        return view('edit', compact('todo'));
     }
 
     /**
@@ -57,14 +65,25 @@ class TodoController extends Controller
      */
     public function update(Request $request, Todo $todo)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+        ]);
+
+        $todo = Todo::where('id', $request->id)->update([
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
+
+        return to_route('index')->with('success', 'Todo update successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Todo $todo)
+    public function destroy(Request $request)
     {
-        //
+        $todo = Todo::where('id', $request->id)->first()->delete();
+        return to_route('index')->with('success', 'Todo deleted successfully');
     }
 }
