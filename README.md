@@ -17,7 +17,7 @@ To get started with Team Tasker, follow these steps:
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/rohitpal/team-tasker.git
+   git clone https://github.com/iamrohitpal/team-tasker.git
    cd team-tasker
    ```
 
