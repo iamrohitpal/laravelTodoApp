@@ -13,6 +13,7 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::get();
+        
         return view('index', compact('todos'));
     }
 
@@ -30,16 +31,16 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|max:255',
+            'title'       => 'required|max:255',
             'description' => 'required',
         ]);
 
         $todo = Todo::create([
-            'title' => $request->title,
+            'title'       => $request->title,
             'description' => $request->description
         ]);
 
-        return to_route('index')->with('success', 'Todo add successfully');
+        return to_route('index')->with('success', 'Data add successfully');
     }
 
     /**
@@ -48,6 +49,7 @@ class TodoController extends Controller
     public function show(Request $request)
     {
         $todo = Todo::where('id', $request->id)->first();
+        
         return view('details', compact('todo'));
     }
 
@@ -57,6 +59,7 @@ class TodoController extends Controller
     public function edit(Request $request)
     {
         $todo = Todo::where('id', $request->id)->first();
+        
         return view('edit', compact('todo'));
     }
 
@@ -66,16 +69,16 @@ class TodoController extends Controller
     public function update(Request $request, Todo $todo)
     {
         $validated = $request->validate([
-            'title' => 'required|max:255',
+            'title'       => 'required|max:255',
             'description' => 'required',
         ]);
 
         $todo = Todo::where('id', $request->id)->update([
-            'title' => $request->title,
+            'title'       => $request->title,
             'description' => $request->description
         ]);
 
-        return to_route('index')->with('success', 'Todo update successfully');
+        return to_route('index')->with('success', 'Data update successfully');
     }
 
     /**
@@ -84,6 +87,7 @@ class TodoController extends Controller
     public function destroy(Request $request)
     {
         $todo = Todo::where('id', $request->id)->first()->delete();
-        return to_route('index')->with('success', 'Todo deleted successfully');
+        
+        return to_route('index')->with('success', 'Data deleted successfully');
     }
 }
