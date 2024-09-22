@@ -5,9 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>
-        @yield('title')
-    </title>
+    <title>{{ $title ?? 'Welcome To Team Tasker' }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -33,16 +31,13 @@
     </nav>
 
     <div class="container">
-        
         @if (session()->has('success'))
-            <div class="alert alert-success">
-
-                {{ session()->get('success') }}
-
-            </div>
+            <x-alert.alert
+                type="success" 
+                message="{{ session()->get('success') }}"
+            />
         @endif
-        @yield('content')
-
+        {{ $slot }}
     </div>
 
 </body>

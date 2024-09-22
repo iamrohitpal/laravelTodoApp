@@ -1,8 +1,7 @@
-@extends('layouts.app')
-@section('title')
-    Edit Todo
-@endsection
-@section('content')
+<x-layout>
+    <x-slot:title>
+        Edit Team Tasker
+    </x-slot:title>
     <form action="{{ route('update') }}" method="post" class="mt-4 p-4">
         @csrf
         <input type="hidden" name="id" value="{{ $todo->id }}">
@@ -24,4 +23,4 @@
             <input type="submit" class="btn btn-primary float-end" value="Update">
         </div>
     </form>
-@endsection
+</x-layout>

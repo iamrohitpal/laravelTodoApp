@@ -16,6 +16,15 @@ class TodoController extends Controller
         
         return view('index', compact('todos'));
     }
+    /**
+     * Display a listing of the resource.
+     */
+    public function dashboard()
+    {
+        $todos = Todo::get();
+        
+        return view('index', compact('todos'));
+    }
 
     /**
      * Show the form for creating a new resource.

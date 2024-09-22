@@ -1,8 +1,7 @@
-@extends('layouts.app')
-@section('title')
-    My Todo App
-@endsection
-@section('content')
+<x-layout>
+    <x-slot:title>
+        Index Team Tasker
+    </x-slot:title>
     <div class="row mt-3">
         <div class="col-12 align-self-center">
             <ul class="list-group">
@@ -14,4 +13,4 @@
             </ul>
         </div>
     </div>
-@endsection
+</x-layout>

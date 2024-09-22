@@ -2,11 +2,27 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/', [TodoController::class, 'index'])->name('index');
-Route::get('create', [TodoController::class, 'create'])->name('create');
-Route::post('store', [TodoController::class, 'store'])->name('store');
-Route::get('details/{id}', [TodoController::class, 'show'])->name('details');
-Route::get('edit/{id}', [TodoController::class, 'edit'])->name('edit');
-Route::post('update', [TodoController::class, 'update'])->name('update');
-Route::get('delete/{id}', [TodoController::class, 'destroy'])->name('delete');
+// Auth Controller 
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/', 'loginPage')->name('loginPage');
+    Route::post('/login', 'login')->name('login');
+    Route::get('/register', 'registerPage')->name('registerPage');
+    Route::post('/register', 'register')->name('register');
+    Route::get('/forgotPassword', 'forgotPasswordPage')->name('forgotPasswordPage');
+    Route::post('/forgotPassword', 'forgotPassword')->name('forgotPassword');
+    Route::post('/logout', 'logout')->name('logout');
+});
+
+// Todo Controller
+Route::controller(TodoController::class)->group(function () {
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/index', 'index')->name('index');
+    Route::get('create', 'create')->name('create');
+    Route::post('store', 'store')->name('store');
+    Route::get('details/{id}', 'show')->name('details');
+    Route::get('edit/{id}', 'edit')->name('edit');
+    Route::post('update', 'update')->name('update');
+    Route::get('delete/{id}', 'destroy')->name('delete');
+});
