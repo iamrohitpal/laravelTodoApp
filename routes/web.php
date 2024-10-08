@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\AuthController;
 
-// Auth Controller 
+// Auth Controller
 Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'loginPage')->name('loginPage');
     Route::post('/login', 'login')->name('login');
@@ -12,11 +12,11 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register')->name('register');
     Route::get('/forgotPassword', 'forgotPasswordPage')->name('forgotPasswordPage');
     Route::post('/forgotPassword', 'forgotPassword')->name('forgotPassword');
-    Route::post('/logout', 'logout')->name('logout');
+    Route::get('/logout', 'logout')->name('logout');
 });
 
 // Todo Controller
-Route::controller(TodoController::class)->group(function () {
+Route::middleware('web')->controller(TodoController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/index', 'index')->name('index');
     Route::get('create', 'create')->name('create');

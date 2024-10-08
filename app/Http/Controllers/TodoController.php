@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
@@ -12,8 +13,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::get();
-        
+        $todos = Todo::where('user_id', Auth::user()->id)->get();
+
         return view('index', compact('todos'));
     }
     /**
@@ -21,8 +22,8 @@ class TodoController extends Controller
      */
     public function dashboard()
     {
-        $todos = Todo::get();
-        
+        $todos = Todo::where('user_id', Auth::user()->id)->get();
+
         return view('index', compact('todos'));
     }
 
@@ -45,6 +46,7 @@ class TodoController extends Controller
         ]);
 
         $todo = Todo::create([
+            'user_id'     => Auth::user()->id,
             'title'       => $request->title,
             'description' => $request->description
         ]);
@@ -57,8 +59,12 @@ class TodoController extends Controller
      */
     public function show(Request $request)
     {
-        $todo = Todo::where('id', $request->id)->first();
-        
+        $todo = Todo::where('id', $request->id)->where('user_id', Auth::user()->id)->first();
+
+        if (!$todo) {
+            return redirect()->intended('dashboard');
+        }
+
         return view('details', compact('todo'));
     }
 
@@ -67,8 +73,12 @@ class TodoController extends Controller
      */
     public function edit(Request $request)
     {
-        $todo = Todo::where('id', $request->id)->first();
-        
+        $todo = Todo::where('id', $request->id)->where('user_id', Auth::user()->id)->first();
+
+        if (!$todo) {
+            return redirect()->intended('dashboard');
+        }
+
         return view('edit', compact('todo'));
     }
 
@@ -96,7 +106,7 @@ class TodoController extends Controller
     public function destroy(Request $request)
     {
         $todo = Todo::where('id', $request->id)->first()->delete();
-        
+
         return to_route('index')->with('success', 'Data deleted successfully');
     }
 }

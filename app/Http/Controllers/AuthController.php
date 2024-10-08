@@ -9,12 +9,16 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function loginPage() 
+    public function loginPage()
     {
+        if (Auth::check('user')) {
+            return redirect()->intended('dashboard');
+        }
+
         return view('auth.login');
     }
 
-    public function login(Request $request) 
+    public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
@@ -24,13 +28,17 @@ class AuthController extends Controller
 
         return redirect()->back()->withErrors(['login' => 'Invalid credentials']);
     }
-    
-    public function registerPage() 
+
+    public function registerPage()
     {
+        if (Auth::check('user')) {
+            return redirect()->intended('dashboard');
+        }
+
         return view('auth.register');
     }
 
-    public function register(Request $request) 
+    public function register(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -49,10 +57,10 @@ class AuthController extends Controller
         return to_route('dashboard');
     }
 
-    public function logout() 
+    public function logout()
     {
         Auth::logout();
-        
+
         return to_route('loginPage');
     }
 }

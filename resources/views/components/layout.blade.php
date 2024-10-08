@@ -27,13 +27,14 @@
         <div class="container">
             <a href="{{ route('index') }}"><span class="navbar-brand mb-0 h1">Todo</span></a>
             <a href="{{ route('create') }}"><span class="btn btn-primary">Create Todo</span></a>
+            <a href="{{ route('logout') }}"><span class="btn btn-primary">Logout</span></a>
         </div>
     </nav>
 
     <div class="container">
         @if (session()->has('success'))
             <x-alert.alert
-                type="success" 
+                type="success"
                 message="{{ session()->get('success') }}"
             />
         @endif
