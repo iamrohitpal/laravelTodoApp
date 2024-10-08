@@ -1,10 +1,7 @@
-@extends('layouts.app')
-
-@section('title')
-    Details
-@endsection
-
-@section('content')
+<x-layout>
+    <x-slot:title>
+        Details Team Tasker
+    </x-slot:title>
     <div class="card text-center mt-5">
         <div class="card-header">
             <b>TODO DETAILS</b>
@@ -16,4 +13,4 @@
             <a href="{{ route('delete', ['id' => $todo->id]) }}"><span class="btn btn-danger">Delete</span></a>
         </div>
     </div>
-@endsection
+</x-layout>
